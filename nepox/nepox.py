@@ -28,7 +28,7 @@ def argparse():
         "--version",
         help="script version",
         action="version",
-        version="nepo v0.0.1",
+        version="nepox v0.0.1",
     )
     return parser.parse_args()
 
