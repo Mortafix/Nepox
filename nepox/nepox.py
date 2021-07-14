@@ -28,7 +28,7 @@ def argparse():
         "--version",
         help="script version",
         action="version",
-        version="nepox v0.0.1",
+        version="nepox v0.0.2",
     )
     return parser.parse_args()
 
@@ -38,8 +38,8 @@ def sublime(full_path, project_name, main_file, venv_name, terminus, venv):
         "folders": [
             {
                 "path": full_path,
-                "folder_exclude_patterns": [venv_name],
-                "file_exclude_patterns": [],
+                "folder_exclude_patterns": [venv_name, "dist", "__pycache__"],
+                "file_exclude_patterns": [".gitignore"],
             }
         ],
         "build_systems": [
@@ -77,11 +77,6 @@ def main():
     if not path.exists(full_path):
         mkdir(full_path)
     run(["python3", "-m", "venv", path.join(full_path, venv_name)])
-    open(path.join(full_path, main_file), "w").write(
-        "#!/usr/bin/env python3"
-        if args.no_venv
-        else f"#!{path.join(full_path,venv_name)}/bin/python3"
-    )
 
     # editors
     if editor == "sublime":
