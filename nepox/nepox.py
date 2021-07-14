@@ -28,7 +28,7 @@ def argparse():
         "--version",
         help="script version",
         action="version",
-        version="nepox v0.0.2",
+        version="nepox v0.0.4",
     )
     return parser.parse_args()
 
@@ -77,6 +77,7 @@ def main():
     if not path.exists(full_path):
         mkdir(full_path)
     run(["python3", "-m", "venv", path.join(full_path, venv_name)])
+    open(path.join(full_path, main_file), "w+").write("")
 
     # editors
     if editor == "sublime":
