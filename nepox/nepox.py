@@ -6,7 +6,7 @@ from subprocess import run
 
 def argparse():
     parser = ArgumentParser(
-        prog="Nepo",
+        prog="Nepox",
         description="How many more projects do you want to start without finishing it?",
         usage=("nepox project-name"),
         epilog="Example: nepox cool-cats -e sublime --no-venv",
@@ -33,11 +33,11 @@ def argparse():
     return parser.parse_args()
 
 
-def sublime(full_path, project_name, main_file, venv_name, terminus, venv):
+def sublime(project_name, main_file, venv_name, terminus, venv):
     return {
         "folders": [
             {
-                "path": full_path,
+                "path": ".",
                 "folder_exclude_patterns": [venv_name, "dist", "__pycache__"],
                 "file_exclude_patterns": [".gitignore"],
             }
@@ -83,7 +83,6 @@ def main():
     if editor == "sublime":
         dump(
             sublime(
-                full_path,
                 args.name,
                 main_file,
                 venv_name,
@@ -96,7 +95,6 @@ def main():
     elif editor == "sublime-terminus":
         dump(
             sublime(
-                full_path,
                 args.name,
                 main_file,
                 venv_name,

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="nepox",
-    version="0.0.4",
+    version="0.0.5",
     author="Moris Doratiotto",
     author_email="moris.doratiotto@gmail.com",
     description="Simple script to create a new Python project",
