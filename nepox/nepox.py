@@ -12,7 +12,7 @@ def argparse():
         epilog="Example: nepox cool-cats -e sublime --no-venv",
     )
     parser.add_argument("name", help="project name")
-    parser.add_argument("-v", "--venv", help="virtual environment name", default=".env")
+    parser.add_argument("-v", "--venv", help="virtual environment name", default="venv")
     parser.add_argument(
         "-e",
         "--editor",
@@ -28,7 +28,7 @@ def argparse():
         "--version",
         help="script version",
         action="version",
-        version="nepox v0.0.4",
+        version="nepox v0.1.0",
     )
     return parser.parse_args()
 
@@ -46,7 +46,7 @@ def sublime(project_name, main_file, venv_name, terminus, venv):
             {
                 "name": project_name,
                 "working_dir": "$folder",
-                "cmd": ["$folder/.env/bin/python3" if venv else "python3", main_file],
+                "cmd": ["$folder/venv/bin/python3" if venv else "python3", main_file],
             }
         ]
         if not terminus
@@ -55,7 +55,7 @@ def sublime(project_name, main_file, venv_name, terminus, venv):
                 "name": project_name,
                 "title": project_name,
                 "working_dir": "$folder",
-                "cmd": ["$folder/.env/bin/python3" if venv else "python3", main_file],
+                "cmd": ["$folder/venv/bin/python3" if venv else "python3", main_file],
                 "target": "terminus_open",
                 "cancel": "terminus_cancel_build",
                 "auto_close": False,
@@ -76,8 +76,13 @@ def main():
     # creation
     if not path.exists(full_path):
         mkdir(full_path)
+    mkdir(path.join(full_path, "static"))
+    open(path.join(full_path, "static", "settings.yaml"), "w+").write("")
+    mkdir(path.join(full_path, "utils"))
     run(["python3", "-m", "venv", path.join(full_path, venv_name)])
     open(path.join(full_path, main_file), "w+").write("")
+    ignore_files = (".gitignore", venv_name, "dist", "__pycache__")
+    open(path.join(full_path, ".gitignore"), "w+").write("\n".join(ignore_files))
 
     # editors
     if editor == "sublime":
